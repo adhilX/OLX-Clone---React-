@@ -6,28 +6,32 @@ import { PostContext } from '../../store/postContext';
 import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase/config';
+import { BeatLoader } from 'react-spinners';
 
  function Posts() {
   const {setPostDetails} = useContext(PostContext)
   const navigate = useNavigate()
   const [products, setProducts]= useState([])
+    const [spinner , setSpinner] = useState(false)
+  
 useEffect(()=>{
 
   async function fetchProducts() {
     try {
-      
+      setSpinner(true)
       const snapshot= await getDocs(collection(db,'products'))
       const products = snapshot.docs.map((product=>({
         id: product.id,
         ...product.data()
       })))
-     setProducts(products)
+      setSpinner(false)
+      setProducts(products)
     } catch (error) {
       console.log(error)
     }
   }
   fetchProducts()
-})
+},[])
 
 
 function HandleView(product){
@@ -36,6 +40,9 @@ function HandleView(product){
   navigate('/view')
 }
   return (
+    <>
+        {spinner?<div className='spinner'><BeatLoader color="#4d7068" /></div>:
+
     <div className="postParentDiv">
       <div className="moreView">
         <div className="heading">
@@ -43,56 +50,33 @@ function HandleView(product){
           <span>View more</span>
         </div>
         <div className="cards">
-     {products.map((pro)=>{
-
-  return       <div onClick={()=>HandleView(pro)}
-            className="card"
-          >
-            <div className="favorite">
-              <Heart></Heart>
-            </div>
-            <div className="image">
-              <img src={pro.ImageURL} alt="" />
-            </div>
-            <div className="content">
-              <p className="rate">&#x20B9; {pro.Price}</p>
-              <span className="kilometer">{pro.category}</span>
-              <p className="name">{pro.Name} </p>
-            </div>
-            <div className="date">
-            <span>
-  {pro?.createdAt ? new Date(pro.createdAt.seconds * 1000).toDateString() : ''}
-</span>
-            </div>
-          </div>
-      
-     })}
-        </div>
-      </div>
-      <div className="recommendations">
-        <div className="heading">
-          <span>Fresh recommendations</span>
-        </div>
-        <div className="cards">
-          <div className="card">
-            <div className="favorite">
-              <Heart></Heart>
-            </div>
-            <div className="image">
-              <img src="../../../Images/R15V3.jpg" alt="" />
-            </div>
-            <div className="content">
-              <p className="rate">&#x20B9; 250000</p>
-              <span className="kilometer">Two Wheeler</span>
-              <p className="name"> YAMAHA R15V3</p>
-            </div>
-            <div className="date">
-              <span>10/5/2021</span>
-            </div>
-          </div>
-        </div>
-      </div>
+    {products.map((pro) => (
+      <div key={pro.id} onClick={() => HandleView(pro)} className="card">
+    <div className="favorite">
+      <Heart />
     </div>
+    <div className="image">
+      <img src={pro.ImageURL} alt={pro.Name || "product"} />
+    </div>
+    <div className="content">
+      <p className="rate">&#x20B9; {pro.Price}</p>
+      <span className="kilometer">{pro.category}</span>
+      <p className="name">{pro.Name}</p>
+    </div>
+    <div className="date">
+      <span>
+        {pro?.createdAt ? new Date(pro.createdAt.seconds * 1000).toDateString() : ''}
+      </span>
+    </div>
+  </div>
+))}
+
+        </div>
+      </div>
+    
+    </div>
+ }
+</>
   );
 }
 

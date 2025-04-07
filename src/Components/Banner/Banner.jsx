@@ -4,33 +4,30 @@ import './Banner.css';
 
 import Arrow from '../../assets/Arrow'
 function Banner() {
+  const categories = [
+    "Cars", "Motorcycles", "Mobile Phones",
+    "Houses & Apartments for Sale",
+    "Scooters", "Commercial Vehicles",
+    "Houses & Apartments for Rent"
+  ];
   return (
     <div className="bannerParentDiv">
       <div className="bannerChildDiv">
         <div className="menuBar">
           <div className="categoryMenu">
             <span>ALL CATEGORIES</span>
-            <Arrow></Arrow> 
+            <Arrow />
           </div>
           <div className="otherQuickOptions">
-            <span>Cars</span>
-            <span>Motorcy...</span>
-            <span>Mobile Ph...</span>
-            <span>For Sale:Houses & Apart...</span>
-            <span>Scoot...</span>
-            <span>Commercial & Other Ve...</span>
-            <span>For Rent: House & Apart...</span>
+            {categories.map((item, index) => (
+              <span key={index}>{item}</span>
+            ))}
           </div>
         </div>
         <div className="banner">
-          <img
-            src={banner}
-            // src="../../../assest/images/banner-copy.png"
-            alt="banner image"
-          />
+          <img src={banner} alt="OLX Banner" />
         </div>
       </div>
-      
     </div>
   );
 }

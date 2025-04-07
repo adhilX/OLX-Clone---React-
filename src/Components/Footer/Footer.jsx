@@ -3,6 +3,7 @@ import React from 'react';
 import './Footer.css';
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
   return (
     <div className="footerParentDiv">
       <div className="content">
@@ -47,7 +48,7 @@ function Footer() {
       </div>
       <div className="footer">
         <p>Other Countries Pakistan - South Africa - Indonesia</p>
-        <p>Free Classifieds in India. © 2006-2021 OLX</p>
+        <p>Free Classifieds in India. © 2006-{currentYear} OLX</p>
       </div>
     </div>
   );

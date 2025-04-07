@@ -29,26 +29,24 @@ function View() {
   // console.log(postDetails)
   return (
     <div className="viewParentDiv">
-      <div className="imageShowDiv">
-        <img
-          src={postDetails.ImageURL}
-          alt=""
-        />
+    <div className="imageShowDiv">
+      <img src={postDetails.ImageURL} alt="product" />
+    </div>
+    <div className="rightSection">
+      <div className="productDetails">
+        <p>&#x20B9; {postDetails.Price}</p>
+        <span className="productName">{postDetails.Name}</span>
+        <p className="productCategory">{postDetails.category}</p>
+        <span className="postedDate">Posted on: ff</span>
       </div>
-      <div className="rightSection">
-        <div className="productDetails">
-          <p>&#x20B9; {postDetails.Price} </p>
-          <span>{postDetails.Name}</span>
-          <p>{postDetails.category} </p>
-          <span> ff </span>
-        </div>
-        <div className="contactDetails">
-          <p>Seller details</p>
-          <p>{userDetails.name}</p>
-          <p>{userDetails.phone}</p>
-        </div>
+      <div className="contactDetails">
+        <p className="sectionTitle">Seller Details</p>
+        <p>{userDetails.name}</p>
+        <p>{userDetails.phone}</p>
       </div>
     </div>
+  </div>
+  
   );
 }
 export default View;

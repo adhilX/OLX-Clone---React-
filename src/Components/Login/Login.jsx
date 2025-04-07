@@ -6,11 +6,21 @@ import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../../firebase/config';
 import { Link, useNavigate } from 'react-router-dom';
 import { FirebaseContext } from '../../store/firebaseContext';
+import { toast } from 'react-toastify';
+import { BeatLoader } from 'react-spinners';
 
 
 function Login() {
   const [User , setUser] = useState({email:'',password:''})
-
+  const [errors, setErrors] = useState({});
+  const [spinner , setSpinner] = useState(false)
+  const validation =()=>{
+    const err={}
+    if (!User.email.match(/^\S+@\S+\.\S+$/)) err.email = 'Enter a valid email';
+    if (User.password.length < 6) err.password = 'Password must be at least 6 characters';
+    setErrors(err)
+    return Object.keys(err).length === 0
+  }
   const HandleData = (e)=>{
     setUser((u)=>({...u,[e.target.name]:e.target.value}))
   }
@@ -19,7 +29,9 @@ function Login() {
 
   const HandleSubmit =async (e)=>{
     e.preventDefault()
+    if(!validation())return
     try {
+      setSpinner(true)
       const userCredentials = await signInWithEmailAndPassword(auth,User.email,User.password)
       const userData = userCredentials.user
       console.log(userCredentials)
@@ -28,6 +40,8 @@ function Login() {
         console.log(userData)                   
         setUserData(userData)
         navigate('/')
+        setSpinner(false)
+        toast.success('Login successully')
       }
     } catch (error) {
       
@@ -35,36 +49,44 @@ function Login() {
     
   }
   return (
-    <div>
-      <div className="loginParentDiv">
-        <img width="200px" height="200px" src={Logo}></img>
-        <form onSubmit={HandleSubmit}>
-          <label htmlFor="fname">Email</label>
-          <br />
-          <input
-            className="input"
-            type="email"
-            id="fname"
-            name="email"
-            onChange={HandleData}
-          />
-          <br />
-          <label htmlFor="lname">Password</label>
-          <br />
-          <input
-            className="input"
-            type="password"
-            id="lname"
-            name="password"
-            onChange={HandleData}
-          />
-          <br />
-          <br />
-          <button type='submit'>Login</button>
-        </form>
-        <Link to={'/signup'}>Signup</Link>
-      </div>
+    <>
+    {spinner?<div className='spinner'><BeatLoader color="#4d7068" /></div>:
+    <div className="loginWrapper">
+    <div className="loginParentDiv">
+      <img width="120px" src={Logo} alt="Logo" />
+      <form onSubmit={HandleSubmit}>
+        <label htmlFor="email">Email</label>
+        <input
+          className="input"
+          type="email"
+          id="email"
+          name="email"
+          onChange={HandleData}
+          placeholder="Enter your email"
+          
+        />
+            {errors.email && <span className="error">{errors.email}</span>}
+        <label htmlFor="password">Password</label>
+        <input
+          className="input"
+          type="password"
+          id="password"
+          name="password"
+          onChange={HandleData}
+          placeholder="Enter your password"
+          
+        />
+            {errors.password && <span className="error">{errors.password}</span>}
+
+        <button type="submit">Login</button>
+      </form>
+      <p className="signupText">
+        Don't have an account? <Link to="/signup">Signup</Link>
+      </p>
     </div>
+  </div>
+    }
+    </>
   );
 }
 

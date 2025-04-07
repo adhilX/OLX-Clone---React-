@@ -1,27 +1,67 @@
 .footerParentDiv {
   width: 100vw;
+  background-color: #ebeeef;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .footerParentDiv .content {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #ebeeef;
-  padding: 16px;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 32px 16px;
+  background-color: #ebeeef;
 }
-.footerParentDiv .content .heading {
-  font-size: 24px;
-  font-weight: bolder;
+
+.footerParentDiv .heading p {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 8px;
+  color: #002f34;
+  text-transform: uppercase;
+}
+
+.footerParentDiv .list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.footerParentDiv .list li {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.footerParentDiv .list li:hover {
+  color: #000;
 }
 
 .footerParentDiv .footer {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  padding: 10px;
-  background: #002f34;
+  padding: 16px;
+  background-color: #002f34;
   color: whitesmoke;
+  text-align: center;
+  font-size: 13px;
 }
 
 .footerParentDiv .footer p {
-  margin: 0;
+  margin: 4px 0;
+}
+
+/* Responsive footer content */
+@media (max-width: 768px) {
+  .footerParentDiv .content {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .footerParentDiv .content > div {
+    margin-bottom: 20px;
+  }
 }

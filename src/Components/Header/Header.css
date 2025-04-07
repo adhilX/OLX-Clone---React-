@@ -119,6 +119,7 @@
 .sellMenu {
   position: relative;
   cursor: pointer;
+  right: 3%;
 }
 
 .sellMenu .all {
@@ -154,7 +155,51 @@
 .sellMenu .sellMenuContent span {
   margin-left: 5px;
 }
+.userDropdown {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  cursor: pointer;
+  margin-top: 1%;
+}
 
+.userName {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.dropdownContent {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: white;
+  padding: 8px 12px;
+  border-radius: 4px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  z-index: 10;
+  white-space: nowrap;
+}
+
+.userDropdown:hover .dropdownContent {
+  display: block;
+}
+
+.dropdownContent p {
+  margin: 0;
+  font-size: 14px;
+  color: #002f34;
+}
+
+.dropdownContent p:hover {
+  text-decoration: underline;
+}
+
+.brandName{
+  cursor: pointer;
+}
 @media only screen and (max-width: 700px) {
   .placeSearch,
   .productSearch,

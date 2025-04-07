@@ -1,40 +1,86 @@
 .bannerParentDiv {
   padding-top: 4em;
+  width: 100%;
+  background-color: #f8f8f8;
 }
-.bannerParentDiv .bannerChildDiv {
+
+.bannerChildDiv {
+  max-width: 1200px;
+  margin: 0 auto;
 }
-.bannerParentDiv .bannerChildDiv .menuBar {
+
+.menuBar {
   display: flex;
-  padding: 10px 16px 10px 16px;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 10px 16px;
+  gap: 12px;
 }
 
-.bannerParentDiv .bannerChildDiv .menuBar span {
+.categoryMenu {
+  display: flex;
+  align-items: center;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 16px;
+  color: #002f34;
+  gap: 6px;
 }
 
-.bannerParentDiv .bannerChildDiv .menuBar .categoryMenu span {
-  margin-right: 16px;
-  font-weight: bolder;
+.otherQuickOptions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-left: 20px;
 }
 
-.bannerParentDiv .bannerChildDiv .menuBar .otherQuickOptions {
-}
-.bannerParentDiv .bannerChildDiv .menuBar .otherQuickOptions span {
-  padding: 10px;
-}
-
-.bannerChildDiv .banner {
-  position: relative;
-  width: 100vw;
-}
-.bannerChildDiv .banner img{
-  width: 100vw;
+.otherQuickOptions span {
+  background-color: #fff;
+  padding: 8px 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #002f34;
+  border: 1px solid #ccc;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-@media only screen and (max-width: 700px) {
-  .otherQuickOptions {
-    display: none;
+.otherQuickOptions span:hover {
+  background-color: #002f34;
+  color: white;
+  border-color: #002f34;
+}
+
+.banner {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.banner img {
+  width: 100%;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+@media only screen and (max-width: 768px) {
+  .menuBar {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  .bannerChildDiv .banner {
-    position: relative;
+
+  .otherQuickOptions {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: 0;
+    margin-top: 10px;
+  }
+
+  .otherQuickOptions span {
+    font-size: 12px;
+    padding: 6px 10px;
+  }
+
+  .banner img {
+    border-radius: 0;
   }
 }

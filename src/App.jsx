@@ -3,13 +3,13 @@ import Signup from './Pages/Signup'
 import Login from './Pages/Login'
 import Create from './Pages/Create'
 import View from './Pages/ViewPost'
-import './App.css'
 import { useContext, useEffect } from 'react'
 import { AuthContext } from './store/firebaseContext'
 import { onAuthStateChanged } from 'firebase/auth'
 import { auth } from './firebase/config'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Post from './store/postContext.jsx'
+import { ToastContainer } from 'react-toastify'
 
 
 const router = createBrowserRouter([
@@ -35,6 +35,7 @@ useEffect(() => {
 
   return(
   <>
+  <ToastContainer theme='dark' />
   <Post>
     <RouterProvider router={router} />;
   </Post> 
