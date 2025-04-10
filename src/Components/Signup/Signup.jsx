@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import Logo from '../../assets/Olx-logo.png';
+import google from '../../assets/google.png'
 import './Signup.css';
 import {
   createUserWithEmailAndPassword,
@@ -9,19 +10,26 @@ import { auth, db } from '../../firebase/config';
 import { doc, setDoc } from 'firebase/firestore';
 import { Link, useNavigate } from 'react-router-dom';
 import { BeatLoader } from 'react-spinners';
+import { toast } from 'react-toastify';
+import GoogleSignup from '../../store/googleAuth';
 
+const errorMessages = {
+  'auth/email-already-in-use': 'This email is already registered.',
+  'auth/weak-password': 'Password should be at least 6 characters.',
+  'auth/invalid-credential': 'Incorrect Email or Password.',
+};
 export default function Signup() {
   const [User, setUser] = useState({ name: '', email: '', phone: '', password: '' });
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
   const [spinner , setSpinner] = useState(false)
-
+  
   const validate = () => {
     const err = {};
     if (User.name.trim().length < 3) err.name = 'Name must be at least 3 characters';
-    if (!User.email.match(/^\S+@\S+\.\S+$/)) err.email = 'Enter a valid email';
+    if (!User.email.trim().match(/^\S+@\S+\.\S+$/)) err.email = 'Enter a valid email';
     if (!User.phone.match(/^\d{10}$/)) err.phone = 'Phone must be 10 digits';
-    if (User.password.length < 6) err.password = 'Password must be at least 6 characters';
+    if (User.password.trim().length < 6) err.password = 'Password must be at least 6 characters';
     setErrors(err);
     return Object.keys(err).length === 0;
   };
@@ -39,13 +47,22 @@ export default function Signup() {
           name: User.name,
           phone: User.phone,
         });
-        navigate('/login');
+        navigate('/login',{replace:true});
         setSpinner(false)
       }
     } catch (error) {
-      console.error('Signup Error:', error.message);
+      setSpinner(false)
+      console.error('Signup Error:', error);
+      const errorCode = error.code
+      const message = errorMessages[errorCode] || 'Something went wrong , Please try again'
+      toast.error(message)
+
     }
   };
+  const handleGoogleSignup = () => {
+    GoogleSignup(navigate, setSpinner);
+  };
+  
 
   const HandilDataChange = (e) => {
     setUser((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -109,6 +126,9 @@ export default function Signup() {
 
           <button type="submit">Signup</button>
         </form>
+        <p>Continue with</p>
+<img src={google} alt="Google Sign-in" className="google-login" onClick={handleGoogleSignup} />
+
         <p className="loginText">
           Already have an account? <Link to="/login">Login</Link>
         </p>

@@ -81,6 +81,17 @@
 .loginText a:hover {
   text-decoration: underline;
 }
+.google-login {
+  width: 30px;
+  cursor: pointer;
+  margin: 10px auto;
+  display: block;
+  transition: transform 0.2s ease;
+}
+
+.google-login:hover {
+  transform: scale(1.1);
+}
 
 
 .error {

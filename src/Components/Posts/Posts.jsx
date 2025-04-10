@@ -80,4 +80,4 @@ function HandleView(product){
   );
 }
 
-export default Posts;
+export default React.memo(Posts);

@@ -3,13 +3,13 @@ import banner from '../../../assets/images/banner-copy.png'
 import './Banner.css';
 
 import Arrow from '../../assets/Arrow'
+const categories = [
+  "Cars", "Motorcycles", "Mobile Phones",
+  "Houses & Apartments for Sale",
+  "Scooters", "Commercial Vehicles",
+  "Houses & Apartments for Rent"
+];
 function Banner() {
-  const categories = [
-    "Cars", "Motorcycles", "Mobile Phones",
-    "Houses & Apartments for Sale",
-    "Scooters", "Commercial Vehicles",
-    "Houses & Apartments for Rent"
-  ];
   return (
     <div className="bannerParentDiv">
       <div className="bannerChildDiv">
@@ -32,4 +32,4 @@ function Banner() {
   );
 }
 
-export default Banner;
+export default React.memo(Banner);

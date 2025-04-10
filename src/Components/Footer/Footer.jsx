@@ -2,8 +2,8 @@ import React from 'react';
 
 import './Footer.css';
 
+const currentYear = new Date().getFullYear();
 function Footer() {
-  const currentYear = new Date().getFullYear();
   return (
     <div className="footerParentDiv">
       <div className="content">
@@ -54,4 +54,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default React.memo(Footer);

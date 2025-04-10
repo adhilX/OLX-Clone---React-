@@ -17,10 +17,11 @@ function View() {
         const docSnap = await getDoc(docRef)
         if (docSnap.exists()) {
           setUserDetails(docSnap.data())
-          console.log(userDetails)
+          // console.log(userDetails)
         } else {
-          console.log("No such user!")
-        }      } catch (error) {
+          console.log("No such user")
+        } 
+         } catch (error) {
         console.log(error)
       }
     }
@@ -49,4 +50,4 @@ function View() {
   
   );
 }
-export default View;
+export default React.memo(View);

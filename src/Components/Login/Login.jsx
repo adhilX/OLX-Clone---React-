@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-
+import google from '../../assets/google.png'
 import Logo from '../../assets/Olx-logo.png';
 import './Login.css';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -8,8 +8,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FirebaseContext } from '../../store/firebaseContext';
 import { toast } from 'react-toastify';
 import { BeatLoader } from 'react-spinners';
+import GoogleSignup from '../../store/googleAuth';
 
-
+const errorMessages = {
+  'auth/email-already-in-use': 'This email is already registered.',
+  'auth/weak-password': 'Password should be at least 6 characters.',
+  'auth/invalid-credential': 'Incorrect Email or Password.',
+};
 function Login() {
   const [User , setUser] = useState({email:'',password:''})
   const [errors, setErrors] = useState({});
@@ -36,18 +41,26 @@ function Login() {
       const userData = userCredentials.user
       console.log(userCredentials)
       if(userData){
-        console.log('dkjddkdf')
+        // console.log('dkjddkdf')
         console.log(userData)                   
         setUserData(userData)
-        navigate('/')
+        navigate('/',{replace:true})
         setSpinner(false)
         toast.success('Login successully')
       }
     } catch (error) {
-      
+      setSpinner(false)
+      console.log('Loginup error',error)
+      const errorCode = error.code
+      const message = errorMessages[errorCode] || 'Something went wrong , Please try again'
+      toast.error(message)
     }
-    
   }
+  const handleGoogleSignup = () => {
+    GoogleSignup(navigate, setSpinner);
+  };
+
+
   return (
     <>
     {spinner?<div className='spinner'><BeatLoader color="#4d7068" /></div>:
@@ -80,6 +93,9 @@ function Login() {
 
         <button type="submit">Login</button>
       </form>
+       <p>Continue with</p>
+      <img src={google} alt="Google Sign-in" className="google-login" onClick={handleGoogleSignup} />
+      
       <p className="signupText">
         Don't have an account? <Link to="/signup">Signup</Link>
       </p>
