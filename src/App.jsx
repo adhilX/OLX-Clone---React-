@@ -21,7 +21,7 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-const {user, setUser} = useContext(AuthContext)
+const { setUser } = useContext(AuthContext)
 
 useEffect(() => {
   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

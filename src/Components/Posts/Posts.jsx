@@ -7,15 +7,16 @@ import { useNavigate } from 'react-router-dom';
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../../firebase/config';
 import { BeatLoader } from 'react-spinners';
+import { AuthContext } from '../../store/firebaseContext';
 
  function Posts() {
   const {setPostDetails} = useContext(PostContext)
   const navigate = useNavigate()
   const [products, setProducts]= useState([])
     const [spinner , setSpinner] = useState(false)
-  
+    const { user } = useContext(AuthContext);
 useEffect(()=>{
-
+if (!user) return
   async function fetchProducts() {
     try {
       setSpinner(true)
@@ -31,7 +32,7 @@ useEffect(()=>{
     }
   }
   fetchProducts()
-},[])
+},[user])
 
 
 function HandleView(product){
